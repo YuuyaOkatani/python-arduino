@@ -214,7 +214,10 @@ class GUI:
             master=self._frame1,
             width=200,
             height=50,
-            bg_color="#34eb58",
+            fg_color="#088120",
+            border_color="#1a5163",
+            border_width=2,
+            corner_radius=20,
             text="Verficar",
             command=self.enviarDadoParaArduino,
         )
