@@ -1,2 +1,6 @@
 .vscode
 .qodo
+/arduino.ino/
+/.arduino.ino/
+.arduino.ino
+arduino.ino
