@@ -236,8 +236,12 @@ class GUI:
     def enviarDadoParaArduino(self):
         message = self._input1.get()
         if message.isalpha():
-            self._initializer.Requisitar_Arduino_Dados(message)
-            self._label_saida.configure(text=f"letra digitada: {message}")
+            if len(message.lower().strip()) > 1 or len(message.lower().strip()) < 1:
+                self._label_saida.configure(text="Digite apenas um caractere :)")
+            else:
+                self._initializer.Requisitar_Arduino_Dados(message)
+                self._label_saida.configure(text=f"letra digitada: {message}")
+
         else:
             self._label_saida.configure(text="Selecione caractere válido :)")
 
