@@ -5,7 +5,6 @@ import time
 import serial
 import customtkinter as ctk
 import threading
-from pyfirmata import Arduino, util
 import ast
 
 root = ctk.CTk()
@@ -13,7 +12,7 @@ root.title("Jogo da forca")
 root.geometry("1000x600")
 ctk.set_appearance_mode("System")
 
-ARDUINO_PORT = "COM7"
+ARDUINO_PORT = "COM6"
 conexao = None
 
 
@@ -76,8 +75,9 @@ class ArduinoComunicator:
                     if "segredo" in received_data.lower().strip():
                         print(f"palavra sorteada: {received_data}")
                         self._segredo = (
-                            received_data.strip().replace("Segredo:", "").strip()
+                            received_data.strip().replace("segredo:", "").strip()
                         )
+
                         print(f"Dados formatados do segredo: {self._segredo}")
 
                         time.sleep(0.01)
@@ -85,14 +85,14 @@ class ArduinoComunicator:
                     if "erros" in received_data.lower().strip():
                         print(f"Quantidade de erros {received_data}")
                         self._erros = int(
-                            received_data.strip().replace("Erros:", "").strip()
+                            received_data.strip().replace("erros:", "").strip()
                         )
                         print(f"Dados formatados erros: {self._erros}")
                         time.sleep(0.01)
                     if "vidas" in received_data.lower().strip():
                         print(f"Quantidade de vidas: {received_data}")
                         self._quantidade_vidas = int(
-                            received_data.strip().replace("Vidas:", "").strip()
+                            received_data.strip().replace("vidas:", "").strip()
                         )
                         print(f"Dados formatados vidas: {self._quantidade_vidas}")
                         time.sleep(0.01)
@@ -116,6 +116,8 @@ class ArduinoComunicator:
                     if "resetgame" in received_data.lower().strip():
 
                         print("Jogo resetado.")
+
+                    print("Dados do arduino: " + received_data.lower().strip())
 
                     time.sleep(0.02)
 
@@ -214,10 +216,7 @@ class GUI:
             master=self._frame1,
             width=200,
             height=50,
-            fg_color="#088120",
-            border_color="#1a5163",
-            border_width=2,
-            corner_radius=20,
+            bg_color="#34eb58",
             text="Verficar",
             command=self.enviarDadoParaArduino,
         )
@@ -236,8 +235,11 @@ class GUI:
     # Enviar e receber os dados do arduino.
     def enviarDadoParaArduino(self):
         message = self._input1.get()
-        self._initializer.Requisitar_Arduino_Dados(message)
-        self._label_saida.configure(text=f"letra digitada: {message}")
+        if message.isalpha():
+            self._initializer.Requisitar_Arduino_Dados(message)
+            self._label_saida.configure(text=f"letra digitada: {message}")
+        else:
+            self._label_saida.configure(text="Selecione caractere válido :)")
 
     # Método para conseguir resposta do arduino de forma cotínua, atualizando a cada segundo.
     def escutar_dados_connector_arduino(self):
@@ -252,15 +254,6 @@ class GUI:
                 self._is_level_complete,
                 self._is_caractere_valid_false,
             ) = self._initializer.Reposta_arduino_dados()
-            print(f"Vidas: {self._vidas} ")
-            print(f"Erros: {self._erros}")
-            print(f"Dicas: {self._dicas}")
-            print(f"Palavra: {self._segredo}")
-            print(f"Verificação se ja foi selecionada: {self._letra_ja_selecionada}")
-            print(
-                f"Verificação se o jogo foi resetado: LEVEL COMPLETE? {self._is_level_complete}"
-            )
-            print(f"Verificar se o jogo já resetou: GAME OVER? {self._is_game_over}")
 
             self._label2.configure(text=self._dicas)
             self._label3.configure(text=" ".join(self._segredo))

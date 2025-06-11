@@ -4,7 +4,7 @@ import threading
 import pygame
 import random
 
-VIRTUAL_ARDUINO_PORT = "COM6"
+VIRTUAL_ARDUINO_PORT = "COM7"
 BAUD_RATE = 9600
 
 PALAVRAS = [
@@ -187,10 +187,10 @@ class ArduinoVirtual:
 
             mensagem_dica_teste = "Dica: " + DICAS[self._numero_aleatorio] + "\n"
 
-            mensagem_dados_segredo = "Segredo: " + self._dados_segredo + "\n"
-            mensagem_vidas = "Vidas: " + str(self._vidas) + "\n"
+            mensagem_dados_segredo = "segredo: " + self._dados_segredo + "\n"
+            mensagem_vidas = "vidas: " + str(self._vidas) + "\n"
 
-            mensagem_erros = f"Erros: {str(self._erros)}" + "\n"
+            mensagem_erros = f"erros: {str(self._erros)}" + "\n"
 
             message_reset = "resetgame" + "\n"
             ser.write(mensagem_dica_teste.encode("utf-8"))
@@ -242,9 +242,9 @@ class ArduinoVirtual:
                     else:
                         self._chance_mudanca = False
                     # Envia todos os dados para serem filtrados pelo programa python
-                    mensagem_vidas = f"Vidas: {str(self._vidas)}" + "\n"
-                    mensagm_erros = "Erros: " + str(self._erros) + "\n"
-                    mensagem_dados_segredo = "Segredo: " + self._dados_segredo + "\n"
+                    mensagem_vidas = f"vidas: {str(self._vidas)}" + "\n"
+                    mensagm_erros = "erros: " + str(self._erros) + "\n"
+                    mensagem_dados_segredo = "segredo: " + self._dados_segredo + "\n"
 
                     print(f"Quantidade de vidas: {str(self._vidas)}")
                     print(f"Quantidade de erros: {str(self._erros)}")
