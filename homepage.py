@@ -6,11 +6,15 @@ import serial
 import customtkinter as ctk
 import threading
 import ast
+from PIL import Image, ImageTk
 
 root = ctk.CTk()
+image = Image.open("images/festajunina_com_fundo_laranja.png    ")
+background_image = ctk.CTkImage(image, size=(1000, 600))
 root.title("Jogo da forca")
 root.geometry("1000x600")
 ctk.set_appearance_mode("System")
+
 
 ARDUINO_PORT = "COM6"
 conexao = None
@@ -171,37 +175,49 @@ class GUI:
         self._escutando = False
         # Primeiro frame
         self._frame1 = ctk.CTkFrame(master=self._master, height=800, width=1000)
-
+        self._label_image = ctk.CTkLabel(
+            self._frame1, image=background_image, text=None
+        )
         self._vidas = 6
         self._erros = 0
         self._dicas = ""
         self._segredo = ""
 
+        # Define a image de fundo.
+
         # Cabeçalho
         self._label1 = ctk.CTkLabel(
-            master=self._frame1, text="Jogo da forca!", font=("Arial", 25, "bold")
+            master=self._frame1,
+            text="Jogo da forca!",
+            font=("Arial", 25, "bold"),
+            fg_color="orange",
         )
+
         # Outro cabeçalho
         self._label2 = ctk.CTkLabel(
             master=self._frame1,
             text="",
             font=("Arial", 25, "bold"),
+            fg_color="orange",
         )
 
         self._label3 = ctk.CTkLabel(
             master=self._frame1,
-            text="",
+            text=None,
             font=("Arial", 25, "bold"),
+            fg_color="orange",
         )
         self._label4 = ctk.CTkLabel(
             master=self._frame1,
-            text="",
+            text=None,
             font=("Arial", 25, "bold"),
+            fg_color="orange",
         )
         self._label5 = ctk.CTkLabel(
             master=self._frame1,
-            text="",
+            text=None,
             font=("Arial", 25, "bold"),
+            fg_color="orange",
         )
 
         # Outro cabeçalho
@@ -209,6 +225,7 @@ class GUI:
             master=self._frame1,
             text="",
             font=("Arial", 25, "bold"),
+            fg_color="orange",
         )
 
         self._input1 = ctk.CTkEntry(master=self._frame1, height=20, width=200)
@@ -222,7 +239,9 @@ class GUI:
         )
 
         # Para enpacotar tudo e mostrar na interface.
+        self._label_image.place(x=0, y=0)
         self._frame1.pack(pady=50, fill="both", expand=True)
+
         self._label1.pack(pady=10)
         self._label2.pack(pady=10)
         self._label3.pack(pady=10)
@@ -231,6 +250,8 @@ class GUI:
         self._label5.pack(pady=10)
         self._button_enter.pack(pady=10)
         self._label_saida.pack(pady=10)
+
+        root.bind("<Configure>", self.bg_resizer)
 
     # Enviar e receber os dados do arduino.
     def enviarDadoParaArduino(self):
@@ -244,6 +265,11 @@ class GUI:
 
         else:
             self._label_saida.configure(text="Selecione caractere válido :)")
+
+    def bg_resizer(self, e):
+        if e.widget is root:
+            i = ctk.CTkImage(image, size=(e.width, e.height))
+            self._label_image.configure(text="", image=i)
 
     # Método para conseguir resposta do arduino de forma cotínua, atualizando a cada segundo.
     def escutar_dados_connector_arduino(self):
@@ -300,4 +326,5 @@ class GUI:
 if __name__ == "__main__":
     p = GUI(master=root, arduino_port=ARDUINO_PORT)
     p.executar_escuta()
+
     root.mainloop()
