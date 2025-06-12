@@ -6,7 +6,7 @@
 
 - Instale o emulador com0com e coloque um par de portas (Ex: COM6 & COM7) no setup (link: https://sourceforge.net/projects/com0com/)
 - faça um git clone e coloque nos dois terminais os dois comandos
-- Caso use arduino real, não é necessario realizar procedimentos para segunda porta. Basta plugar o arduino (Contanto que tenha todo códigp C++ na memória dele) direto e rodar o programa python. 
+- Caso use arduino real, não é necessario realizar procedimentos para segunda porta. Basta plugar o arduino (Contanto que tenha todo código C++ na memória dele) direto e rodar o programa python. 
 
 ## No primeiro terminal (porta COM6):
 ```
