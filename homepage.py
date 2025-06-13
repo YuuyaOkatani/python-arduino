@@ -9,7 +9,7 @@ import ast
 from PIL import Image, ImageTk
 
 root = ctk.CTk()
-image = Image.open("images/festajunina_com_fundo_laranja.png    ")
+image = Image.open("images/festa_junina_com_fundo_laranja_2.png    ")
 background_image = ctk.CTkImage(image, size=(1000, 600))
 root.title("Jogo da forca")
 root.geometry("1000x600")
@@ -190,7 +190,8 @@ class GUI:
             master=self._frame1,
             text="Jogo da forca!",
             font=("Arial", 25, "bold"),
-            fg_color="orange",
+            fg_color="#FF7A00",
+            bg_color="#FF7A00",
         )
 
         # Outro cabeçalho
@@ -198,26 +199,30 @@ class GUI:
             master=self._frame1,
             text="",
             font=("Arial", 25, "bold"),
-            fg_color="orange",
+            fg_color="#FF7A00",
+            bg_color="#FF7A00",
         )
 
         self._label3 = ctk.CTkLabel(
             master=self._frame1,
             text=None,
             font=("Arial", 25, "bold"),
-            fg_color="orange",
+            fg_color="#FF7A00",
+            bg_color="#FF7A00",
         )
         self._label4 = ctk.CTkLabel(
             master=self._frame1,
             text=None,
             font=("Arial", 25, "bold"),
-            fg_color="orange",
+            fg_color="#FF7A00",
+            bg_color="#FF7A00",
         )
         self._label5 = ctk.CTkLabel(
             master=self._frame1,
             text=None,
             font=("Arial", 25, "bold"),
-            fg_color="orange",
+            fg_color="#FF7A00",
+            bg_color="#FF7A00",
         )
 
         # Outro cabeçalho
@@ -225,7 +230,8 @@ class GUI:
             master=self._frame1,
             text="",
             font=("Arial", 25, "bold"),
-            fg_color="orange",
+            fg_color="#FF7A00",
+            bg_color="#FF7A00",
         )
 
         self._input1 = ctk.CTkEntry(master=self._frame1, height=20, width=200)
